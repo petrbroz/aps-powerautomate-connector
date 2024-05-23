@@ -9,7 +9,7 @@ paths:
   '/construction/issues/v1/projects/{project_id}/issue-types':
     get:
       operationId: GetIssueTypes
-      summary: Retrieves issue categories and types.
+      summary: Retrieve issue categories and types
       responses:
         '200':
           description: OK
@@ -184,7 +184,7 @@ paths:
   '/construction/issues/v1/projects/{project_id}/issues':
     post:
       operationId: CreateIssue
-      summary: Creates new issue.
+      summary: Create new issue
       responses:
         '200':
           description: OK
@@ -550,7 +550,7 @@ paths:
   /webhooks/v1/systems/data/events/dm.version.added/hooks:
     post:
       operationId: OnVersionAdded
-      summary: When a new version of a design is uploaded.
+      summary: When a new version of a design is uploaded
       requestBody:
         content:
           '*/*':
