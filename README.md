@@ -9,7 +9,7 @@ Experimental Microsoft Power Automate connector for Autodesk Platform Services.
 - While on https://make.powerautomate.com, go to _Custom connectors_
   - Tip: if you can't see this option in the left sidebar, click _... More_, then _Discover all_, and select _Custom connectors_ from there
 - In the top-right corner, expand the _New custom connector_ menu, and select _Import an OpenAPI from URL_
-- Give your connector some name (you'll need this name later), and import the following URL: https://raw.githubusercontent.com/petrbroz/aps-powerautomate-connector/master/build/aps-powerautomate-connector.yaml
+- Give your connector some name (you'll need this name later), and import the following URL: https://petrbroz.github.io/aps-powerautomate-connector/aps-powerautomate-connector.yaml
 - Adjust the connector icon and color scheme if needed
 - Go to the _2. Security_ section
 - Set your application's client ID and secret

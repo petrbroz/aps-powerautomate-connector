@@ -1,5 +1,5 @@
 node_modules
-tmp
+build
 *.log
 .DS_Store
 Thumbs.db
