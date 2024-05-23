@@ -36,3 +36,5 @@ Experimental Microsoft Power Automate connector for Autodesk Platform Services.
 - Install development dependencies: `yarn install`
 - Update the OpenAPI specs as needed
 - Run `yarn run bundle` to bundle all the specs into a single file (_build/aps-powerautomate-connector.yaml_)
+
+> When working on the OpenAPI specs, make sure to use OpenAPI extensions related to Power Automate custom connectors: https://learn.microsoft.com/en-us/connectors/custom-connectors/openapi-extensions.
