@@ -1,6 +1,6 @@
 {
   "name": "aps-powerautomate-connector",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Experimental Microsoft Power Automate connector for Autodesk Platform Services.",
   "author": "Petr Broz <petr.broz@autodesk.com>",
   "license": "MIT",

@@ -1,5 +1,4 @@
 node_modules
-build
 tmp
 *.log
 .DS_Store
