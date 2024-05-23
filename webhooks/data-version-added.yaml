@@ -1,6 +1,6 @@
 post:
   operationId: OnVersionAdded
-  summary: When a new version of a design is uploaded.
+  summary: When a new version of a design is uploaded
   requestBody:
     content:
       '*/*':

@@ -1,6 +1,6 @@
 get:
   operationId: GetIssueTypes
-  summary: Retrieves issue categories and types.
+  summary: Retrieve issue categories and types
   responses:
     '200':
       description: OK

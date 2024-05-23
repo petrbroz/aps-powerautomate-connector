@@ -1,6 +1,6 @@
 post:
   operationId: CreateIssue
-  summary: Creates new issue.
+  summary: Create new issue
   responses:
     '200':
       description: OK
