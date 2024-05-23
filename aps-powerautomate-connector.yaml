@@ -1,0 +1,709 @@
+openapi: 3.0.1
+info:
+  title: Autodesk Platform Services
+  description: Experimental Microsoft Power Automate connector for Autodesk Platform Services.
+  version: '0.1'
+servers:
+  - url: 'https://developer.api.autodesk.com/'
+paths:
+  '/construction/issues/v1/projects/{project_id}/issue-types':
+    get:
+      operationId: GetIssueTypes
+      summary: Retrieves issue categories and types.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: IssueTypes
+                type: object
+                properties:
+                  pagination:
+                    type: object
+                    description: The pagination object.
+                    properties:
+                      limit:
+                        type: integer
+                        description: The number of items per page.
+                      offset:
+                        type: integer
+                        description: The page number that the results begin from.
+                      totalResults:
+                        type: integer
+                        description: The number of items in the response.
+                  results:
+                    type: array
+                    description: A list of issue type categories.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The ID of the issue type.
+                        containerId:
+                          type: string
+                          description: Not relevant
+                        title:
+                          type: string
+                          description: 'Max length: 250'
+                        isActive:
+                          type: boolean
+                          description: States whether the issue type is active.
+                        orderIndex:
+                          type: integer
+                          description: Not relevant
+                        permittedActions:
+                          type: array
+                          description: Not relevant
+                          items:
+                            type: string
+                        permittedAttributes:
+                          type: array
+                          description: Not relevant
+                          items:
+                            type: string
+                        subtypes:
+                          type: array
+                          description: A list of subtypes of the specific issue type.
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                description: The ID of the issue subtype.
+                              issueTypeId:
+                                type: string
+                                description: The ID of the parent issue type.
+                              title:
+                                type: string
+                                description: 'Max length: 250'
+                              code:
+                                type: string
+                                description: 3 chars pin label.
+                              isActive:
+                                type: boolean
+                                description: States whether the issue type is active.
+                              orderIndex:
+                                type: integer
+                                description: Not relevant
+                              isReadOnly:
+                                type: boolean
+                                description: Not relevant
+                              permittedActions:
+                                type: array
+                                description: Not relevant
+                                items:
+                                  type: string
+                              permittedAttributes:
+                                type: array
+                                description: Not relevant
+                                items:
+                                  type: string
+                              createdBy:
+                                type: string
+                                description: The unique identifier of the user who created the issue type.
+                              createdAt:
+                                type: string
+                                description: 'The date and time the issue was created, in ISO8601 format.'
+                              updatedBy:
+                                type: string
+                                description: The unique identifier of the user who updated the issue type.
+                              updatedAt:
+                                type: string
+                                description: 'The date and time the issue type was updated, in ISO8601 format.'
+                              deletedBy:
+                                type: string
+                                description: The unique identifier of the user who deleted the issue type.
+                              deletedAt:
+                                type: string
+                                description: 'The date and time the issue type was deleted, in ISO8601 format.'
+                        statusSet:
+                          type: string
+                          description: Not relevant
+                        createdBy:
+                          type: string
+                          description: The unique identifier of the user who created the issue type.
+                        createdAt:
+                          type: string
+                          description: 'The date and time the issue was created, in ISO8601 format.'
+                        updatedBy:
+                          type: string
+                          description: The unique identifier of the user who updated the issue type.
+                        updatedAt:
+                          type: string
+                          description: 'The date and time the issue type was updated, in ISO8601 format.'
+                        deletedBy:
+                          type: string
+                          description: The unique identifier of the user who deleted the issue type.
+                        deletedAt:
+                          type: string
+                          description: 'The date and time the issue type was deleted, in ISO8601 format.'
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - 3-legged:
+            - 'data:read'
+      parameters:
+        - schema:
+            type: string
+          name: project_id
+          in: path
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: include
+          description: Use include=subtypes to include the types (subtypes) for each category (type).
+        - schema:
+            type: integer
+          in: query
+          name: limit
+          description: Add limit=20 to limit the results count (together with the offset to support pagination).
+        - schema:
+            type: integer
+          in: query
+          name: offset
+          description: Add offset=20 to get partial results (together with the limit to support pagination).
+        - schema:
+            type: string
+          in: query
+          name: 'filter[updatedAt]'
+          description: 'Retrieves types that were last updated at the specified date and time, in in one of the following URL-encoded formats: YYYY-MM-DDThh:mm:ss.sz or YYYY-MM-DD. Separate multiple values with commas.'
+        - schema:
+            type: boolean
+          in: query
+          name: 'filter[isActive]'
+          description: 'Filter types by status e.g. filter[isActive]=true will only return active types. Default value: undefined (meaning both active & inactive issue type categories will return).'
+  '/construction/issues/v1/projects/{project_id}/issues':
+    post:
+      operationId: CreateIssue
+      summary: Creates new issue.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: Issue
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier of the issue.
+                  containerId:
+                    type: string
+                    description: Not relevant
+                  deleted:
+                    type: boolean
+                    description: 'States whether the issue was deleted. Default value: false.'
+                  displayId:
+                    type: integer
+                    description: The chronological user-friendly identifier of the issue.
+                  title:
+                    type: string
+                    description: |-
+                      The description and purpose of the issue.
+                      Max length: 10000
+                  description:
+                    type: string
+                    description: |-
+                      The description and purpose of the issue.
+                      Max length: 10000
+                  snapshotUrn:
+                    type: string
+                    description: Not relevant
+                  issueTypeId:
+                    type: string
+                    description: The unique identifier of the type of the issue.
+                  issueSubtypeId:
+                    type: string
+                    description: The unique identifier of the subtype of the issue.
+                  status:
+                    type: string
+                  assignedTo:
+                    type: string
+                    description: 'The Autodesk ID of the member, role, or company you want to assign to the issue. Note that if you select an assignee ID, you also need to select a type (assignedToType).'
+                  assignedToType:
+                    type: string
+                    description: 'The type of the current assignee of this issue. Possible values: user, company, role, null. Note that if you select a type, you also need to select the assignee ID (assignedTo).'
+                  dueDate:
+                    type: string
+                    description: 'The due date of the issue, in ISO8601 format.'
+                  startDate:
+                    type: string
+                    description: 'The start date of the issue, in ISO8601 format.'
+                  locationId:
+                    type: string
+                    description: The unique LBS (Location Breakdown Structure) identifier that relates to the issue.
+                  locationDetails:
+                    type: string
+                    description: |-
+                      The location as plain text that relates to the issue.
+                      Max length: 8300
+                  linkedDocuments:
+                    type: array
+                    description: Information about the files associated with issues (pushpins).
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: |-
+                            The type of file. Possible values:
+                            TwoDVectorPushpin (3D models) TwoDRasterPushpin (2D sheets and views)
+                        urn:
+                          type: string
+                          description: The ID of the file associated with the issue (pushpin). Note the we do not currently support data associated with the ACC Build Sheet tool.
+                        createdBy:
+                          type: string
+                          description: The Autodesk ID of the user who created the pushpin issue.
+                        createdAt:
+                          type: string
+                          description: 'The date and time the pushpin was created, in ISO8601 format.'
+                        createdAtVersion:
+                          type: integer
+                          description: 'The version of the file the pushin issue was added to. For information about file versions, see the Data Management API.'
+                        closedBy:
+                          type: string
+                          description: The Autodesk ID of the user who closed the pushpin issue.
+                        closedAt:
+                          type: string
+                          description: 'The date and time the pushpin issue was closed, in ISO8601 format.'
+                        closedAtVersion:
+                          type: integer
+                          description: The version of the file when the pushpin issue was closed.
+                        details:
+                          type: object
+                          description: Information about the individual viewable.
+                          properties:
+                            viewable:
+                              type: object
+                              description: 'The individual viewable associated with the issue (pushpin). This is relevant for both individual 2D sheets and views within a 3D model, and individual PDF sheets within a multi-sheet PDF file. It is only relevant if the issue is associated with a file.'
+                              properties:
+                                id:
+                                  type: string
+                                  description: Not relevant
+                                guid:
+                                  type: string
+                                  description: The ID of the viewable (guid).
+                                viewableId:
+                                  type: string
+                                  description: Not relevant
+                                name:
+                                  type: string
+                                  description: |-
+                                    The name of the viewable.
+                                    Max length: 1000
+                                is3D:
+                                  type: boolean
+                                  description: True if it is a 3D viewable false if it is a 2D viewable
+                            position:
+                              type: object
+                              description: The position of the pushpin in the viewable.
+                              properties:
+                                x:
+                                  type: integer
+                                  description: The x-value of the position in the viewable.
+                                'y':
+                                  type: integer
+                                  description: The y-value of the position in the viewable.
+                                z:
+                                  type: integer
+                                  description: The z-value of the position in the viewable.
+                            objectId:
+                              type: integer
+                              description: The ID of the element the pushpin is associated with in the viewable.
+                            externalId:
+                              type: string
+                              description: An external identifier of the element the pushpin is associated with in the viewable.
+                            viewerState:
+                              type: object
+                              description: 'The viewer state at the time the pushpin was created. Maximum length: 2,500,000 characters. You can get the viewer state object by calling ViewerState.getState(). To restore the viewer instance use ViewerState.restoreState(). See the `Viewer API documentation https://developer.autodesk.com/en/docs/viewer/v2/reference/javascript/viewerstate/`_ for more details.'
+                  links:
+                    type: array
+                    description: Not relevant
+                    items:
+                      type: object
+                  ownerId:
+                    type: string
+                    description: Not relevant
+                  rootCauseId:
+                    type: string
+                    description: The unique identifier of the type of root cause for the issue.
+                  officialResponse:
+                    type: object
+                    description: Not relevant
+                  issueTemplateId:
+                    type: string
+                    description: Not relevant
+                  permittedStatuses:
+                    type: array
+                    description: |-
+                      A list of statuses accessible to the current user, this is based on the current status of the issue and the user permissions.
+                      Possible Values: open, pending, in_review, closed.
+                    items:
+                      type: string
+                  permittedAttributes:
+                    type: array
+                    description: 'A list of attributes the current user can manipulate in the current context. issueTypeId, linkedDocument, links, ownerId, officialResponse, rootCauseId, snapshotUrn are not applicable.'
+                    items:
+                      type: string
+                  published:
+                    type: boolean
+                    description: 'States whether the issue is published. Default value: false (e.g. unpublished).'
+                  permittedActions:
+                    type: object
+                    description: |-
+                      The list of actions permitted for the user for this issue in its current state.
+                      Note that if a user with Create for my company permissions attempts to assign a user from a another company to the issue, it will return an error.
+
+                      Possible Values: assign_all (can assign another user from another company to the issue), assign_same_company (can only assign another user from the same company to the issue), clear_assignee, delete, add_comment, add_attachment, remove_attachment.
+
+                      The following values are not relevant: add_attachment, remove_attachment.
+                  commentCount:
+                    type: integer
+                    description: The number of comments in this issue.
+                  attachmentCount:
+                    type: integer
+                    description: Not relevant
+                  openedBy:
+                    type: string
+                    description: Not relevant
+                  openedAt:
+                    type: string
+                    description: Not relevant
+                  closedBy:
+                    type: string
+                    description: The unique identifier of the user who closed the issue.
+                  closedAt:
+                    type: string
+                    description: 'The date and time the issue was closed, in ISO8601 format.'
+                  createdBy:
+                    type: string
+                    description: The unique identifier of the user who created the issue
+                  createdAt:
+                    type: string
+                    description: 'The date and time the issue was created, in ISO8601 format.'
+                  updatedBy:
+                    type: string
+                    description: The unique identifier of the user who updated the issue.
+                  updatedAt:
+                    type: string
+                    description: 'The date and time the issue was updated, in ISO8601 format.'
+                  watchers:
+                    type: array
+                    description: The Autodesk ID of the member you want to assign as a watcher for the issue.
+                    items:
+                      type: string
+                  customAttributes:
+                    type: array
+                    description: A list of custom attributes of the specific issue.
+                    items:
+                      type: object
+                      properties:
+                        attributeDefinitionId:
+                          type: string
+                          description: The unique identifier of the custom attribute.
+                        value:
+                          type: object
+                          description: 'Custom attribute value. Possible value types: string, number, null.'
+                        type:
+                          type: string
+                          description: 'The type of attribute. Possible values: numeric, paragraph, list (this corresponds to dropdown in the UI), text.'
+                        title:
+                          type: string
+                          description: Free text description of the attribute.
+                  gpsCoordinates:
+                    type: object
+                    description: A GPS Coordinate which represents the geo location of the issue.
+                    properties:
+                      latitude:
+                        type: number
+                      longitude:
+                        type: number
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '409':
+          description: Conflict
+      parameters:
+        - schema:
+            type: string
+          name: project_id
+          in: path
+          required: true
+          description: The ID of the project.
+      security:
+        - 3-legged:
+            - 'data:write'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: IssuePayload
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: |-
+                    The description and purpose of the issue.
+                    Max length: 10000
+                description:
+                  type: string
+                  description: |-
+                    The description and purpose of the issue.
+                    Max length: 10000
+                snapshotUrn:
+                  type: string
+                  description: Not relevant
+                issueSubtypeId:
+                  type: string
+                  description: The unique identifier of the subtype of the issue.
+                status:
+                  type: string
+                  description: 'The current status of the issue. To check the available statuses for the project, call GET users/me and check the permitted statuses list (issue.new.permittedStatuses). For more information about statuses, see the Help documentation.'
+                  enum:
+                    - draft
+                    - open
+                    - pending
+                    - in_progress
+                    - in_review
+                    - completed
+                    - not_approved
+                    - in_dispute
+                    - closed
+                assignedTo:
+                  type: string
+                  description: 'The Autodesk ID of the member, role, or company you want to assign to the issue. Note that if you select an assignee ID, you also need to select a type (assignedToType).'
+                assignedToType:
+                  type: string
+                  enum:
+                    - user
+                    - company
+                    - role
+                    - 'null'
+                dueDate:
+                  type: string
+                  description: 'The due date of the issue, in ISO8601 format.'
+                startDate:
+                  type: string
+                  description: 'The start date of the issue, in ISO8601 format.'
+                locationId:
+                  type: string
+                  description: The unique LBS (Location Breakdown Structure) identifier that relates to the issue.
+                locationDetails:
+                  type: string
+                  description: |-
+                    The location as plain text that relates to the issue.
+                    Max length: 8300
+                rootCauseId:
+                  type: string
+                  description: The unique identifier of the type of root cause for the issue.
+                issueTemplateId:
+                  type: string
+                  description: The unique identifier of the type of root cause for the issue.
+                published:
+                  type: boolean
+                  description: 'States whether the issue is published. Default value: false (e.g. unpublished).'
+                permittedActions:
+                  type: object
+                  description: |-
+                    The list of actions permitted for the user for this issue in its current state.
+                    Note that if a user with Create for my company permissions attempts to assign a user from a another company to the issue, it will return an error.
+
+                    Possible Values: assign_all (can assign another user from another company to the issue), assign_same_company (can only assign another user from the same company to the issue), clear_assignee, delete, add_comment, add_attachment, remove_attachment.
+
+                    The following values are not relevant: add_attachment, remove_attachment.
+                watchers:
+                  type: array
+                  description: The Autodesk ID of the member you want to assign as a watcher for the issue.
+                  items:
+                    type: string
+                customAttributes:
+                  type: array
+                  description: A list of custom attributes of the specific issue.
+                  items:
+                    type: object
+                    properties:
+                      attributeDefinitionId:
+                        type: string
+                        description: The unique identifier of the custom attribute.
+                      value:
+                        type: object
+                        description: 'Custom attribute value. Possible value types: string, number, null.'
+                gpsCoordinates:
+                  type: object
+                  description: A GPS Coordinate which represents the geo location of the issue.
+                  properties:
+                    latitude:
+                      type: number
+                    longitude:
+                      type: number
+  /webhooks/v1/systems/data/events/dm.version.added/hooks:
+    post:
+      operationId: OnVersionAdded
+      summary: When a new version of a design is uploaded.
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                callbackUrl:
+                  type: string
+                  description: Callback URL.
+                  x-ms-visibility: internal
+                  x-ms-notification-url: true
+                scope:
+                  type: object
+                  description: Webhook scope.
+                  properties:
+                    folder:
+                      type: string
+                      description: Folder URN.
+              required:
+                - callbackUrl
+                - scope
+        required: false
+      responses:
+        '201':
+          description: Successful creation of webhook.
+      x-ms-trigger: single
+      x-ms-visibility: advanced
+      x-codegen-request-body-name: body
+    x-ms-notification-content:
+      schema:
+        type: object
+        properties:
+          version:
+            type: string
+          resourceUrn:
+            type: string
+          hook:
+            type: object
+            properties:
+              hookId:
+                type: string
+              tenant:
+                type: string
+              callbackUrl:
+                type: string
+              createdBy:
+                type: string
+              event:
+                type: string
+              createdDate:
+                type: string
+              lastUpdatedDate:
+                type: string
+              system:
+                type: string
+              creatorType:
+                type: string
+              status:
+                type: string
+              scope:
+                type: object
+                properties:
+                  folder:
+                    type: string
+              hookAttribute:
+                type: object
+              urn:
+                type: string
+          payload:
+            type: object
+            properties:
+              ext:
+                type: string
+              modifiedTime:
+                type: string
+              creator:
+                type: string
+              lineageUrn:
+                type: string
+              sizeInBytes:
+                type: integer
+              hidden:
+                type: boolean
+              indexable:
+                type: boolean
+              source:
+                type: string
+              version:
+                type: string
+              user_info:
+                type: object
+                properties:
+                  id:
+                    type: string
+              name:
+                type: string
+              context:
+                type: object
+                properties:
+                  lineage:
+                    type: object
+                    properties:
+                      reserved:
+                        type: boolean
+                      createUserId:
+                        type: string
+                      createTime:
+                        type: string
+                      createUserName:
+                        type: string
+                      lastModifiedUserId:
+                        type: string
+                      lastModifiedTime:
+                        type: string
+                      lastModifiedUserName:
+                        type: string
+                  operation:
+                    type: string
+              createdTime:
+                type: string
+              modifiedBy:
+                type: string
+              state:
+                type: string
+              parentFolderUrn:
+                type: string
+              ancestors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    urn:
+                      type: string
+                  required:
+                    - name
+                    - urn
+              project:
+                type: string
+              tenant:
+                type: string
+components:
+  securitySchemes:
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://developer.api.autodesk.com/authentication/v2/authorize'
+          tokenUrl: 'https://developer.api.autodesk.com/authentication/v2/token'
+          refreshUrl: 'https://developer.api.autodesk.com/authentication/v2/token'
+          scopes:
+            'data:read': Read your data
+            'data:write': Modify your data
+            'data:create': Create new data
+            'data:search': Search data
