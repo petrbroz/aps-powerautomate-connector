@@ -1,0 +1,34 @@
+post:
+  operationId: OnVersionAdded
+  summary: When a new version of a design is uploaded.
+  requestBody:
+    content:
+      '*/*':
+        schema:
+          type: object
+          properties:
+            callbackUrl:
+              type: string
+              description: Callback URL.
+              x-ms-visibility: internal
+              x-ms-notification-url: true
+            scope:
+              type: object
+              description: Webhook scope.
+              properties:
+                folder:
+                  type: string
+                  description: Folder URN.
+          required:
+          - callbackUrl
+          - scope
+    required: false
+  responses:
+    '201':
+      description: Successful creation of webhook.
+  x-ms-trigger: single
+  x-ms-visibility: advanced
+  x-codegen-request-body-name: body
+x-ms-notification-content:
+  schema:
+    $ref: './schemas/OnVersionAddedCallback.yaml'

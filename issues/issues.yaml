@@ -1,0 +1,31 @@
+post:
+  operationId: CreateIssue
+  summary: Creates new issue.
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: './schemas/Issue.yaml'
+    '400':
+      description: Bad Request
+    '403':
+      description: Forbidden
+    '409':
+      description: Conflict
+  parameters:
+    - schema:
+        type: string
+      name: project_id
+      in: path
+      required: true
+      description: The ID of the project.
+  security:
+    - 3-legged:
+      - data:write
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: './schemas/IssuePayload.yaml'

@@ -1,0 +1,123 @@
+title: IssueTypes
+type: object
+properties:
+  pagination:
+    type: object
+    description: The pagination object.
+    properties:
+      limit:
+        type: integer
+        description: The number of items per page.
+      offset:
+        type: integer
+        description: The page number that the results begin from.
+      totalResults:
+        type: integer
+        description: The number of items in the response.
+  results:
+    type: array
+    description: A list of issue type categories.
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the issue type.
+        containerId:
+          type: string
+          description: Not relevant
+        title:
+          type: string
+          description: 'Max length: 250'
+        isActive:
+          type: boolean
+          description: States whether the issue type is active.
+        orderIndex:
+          type: integer
+          description: Not relevant
+        permittedActions:
+          type: array
+          description: Not relevant
+          items:
+            type: string
+        permittedAttributes:
+          type: array
+          description: Not relevant
+          items:
+            type: string
+        subtypes:
+          type: array
+          description: A list of subtypes of the specific issue type.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The ID of the issue subtype.
+              issueTypeId:
+                type: string
+                description: The ID of the parent issue type.
+              title:
+                type: string
+                description: 'Max length: 250'
+              code:
+                type: string
+                description: 3 chars pin label.
+              isActive:
+                type: boolean
+                description: States whether the issue type is active.
+              orderIndex:
+                type: integer
+                description: Not relevant
+              isReadOnly:
+                type: boolean
+                description: Not relevant
+              permittedActions:
+                type: array
+                description: Not relevant
+                items:
+                  type: string
+              permittedAttributes:
+                type: array
+                description: Not relevant
+                items:
+                  type: string
+              createdBy:
+                type: string
+                description: The unique identifier of the user who created the issue type.
+              createdAt:
+                type: string
+                description: 'The date and time the issue was created, in ISO8601 format.'
+              updatedBy:
+                type: string
+                description: The unique identifier of the user who updated the issue type.
+              updatedAt:
+                type: string
+                description: 'The date and time the issue type was updated, in ISO8601 format.'
+              deletedBy:
+                type: string
+                description: The unique identifier of the user who deleted the issue type.
+              deletedAt:
+                type: string
+                description: 'The date and time the issue type was deleted, in ISO8601 format.'
+        statusSet:
+          type: string
+          description: Not relevant
+        createdBy:
+          type: string
+          description: The unique identifier of the user who created the issue type.
+        createdAt:
+          type: string
+          description: 'The date and time the issue was created, in ISO8601 format.'
+        updatedBy:
+          type: string
+          description: The unique identifier of the user who updated the issue type.
+        updatedAt:
+          type: string
+          description: 'The date and time the issue type was updated, in ISO8601 format.'
+        deletedBy:
+          type: string
+          description: The unique identifier of the user who deleted the issue type.
+        deletedAt:
+          type: string
+          description: 'The date and time the issue type was deleted, in ISO8601 format.'

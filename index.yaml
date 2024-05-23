@@ -1,0 +1,28 @@
+openapi: 3.0.1
+info:
+  title: Autodesk Platform Services
+  description: Experimental Microsoft Power Automate connector for Autodesk Platform Services.
+  version: "0.1"
+servers:
+- url: https://developer.api.autodesk.com/
+paths:
+  '/construction/issues/v1/projects/{project_id}/issue-types':
+    $ref: './issues/issue-types.yaml'
+  '/construction/issues/v1/projects/{project_id}/issues':
+    $ref: './issues/issues.yaml'
+  '/webhooks/v1/systems/data/events/dm.version.added/hooks':
+    $ref: './webhooks/data-version-added.yaml'
+components:
+  securitySchemes:
+    3-legged:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://developer.api.autodesk.com/authentication/v2/authorize
+          tokenUrl: https://developer.api.autodesk.com/authentication/v2/token
+          refreshUrl: https://developer.api.autodesk.com/authentication/v2/token
+          scopes:
+            'data:read': Read your data
+            'data:write': Modify your data
+            'data:create': Create new data
+            'data:search': Search data

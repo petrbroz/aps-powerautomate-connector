@@ -1,0 +1,52 @@
+get:
+  operationId: GetIssueTypes
+  summary: Retrieves issue categories and types.
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: './schemas/IssueTypes.yaml'
+    '400':
+      description: Bad Request
+    '403':
+      description: Forbidden
+    '404':
+      description: Not Found
+    '500':
+      description: Internal Server Error
+  security:
+    - 3-legged:
+      - data:read
+  parameters:
+    - schema:
+        type: string
+      name: project_id
+      in: path
+      required: true
+    - schema:
+        type: string
+      in: query
+      name: include
+      description: Use include=subtypes to include the types (subtypes) for each category (type).
+    - schema:
+        type: integer
+      in: query
+      name: limit
+      description: Add limit=20 to limit the results count (together with the offset to support pagination).
+    - schema:
+        type: integer
+      in: query
+      name: offset
+      description: Add offset=20 to get partial results (together with the limit to support pagination).
+    - schema:
+        type: string
+      in: query
+      name: 'filter[updatedAt]'
+      description: 'Retrieves types that were last updated at the specified date and time, in in one of the following URL-encoded formats: YYYY-MM-DDThh:mm:ss.sz or YYYY-MM-DD. Separate multiple values with commas.'
+    - schema:
+        type: boolean
+      in: query
+      name: 'filter[isActive]'
+      description: 'Filter types by status e.g. filter[isActive]=true will only return active types. Default value: undefined (meaning both active & inactive issue type categories will return).'

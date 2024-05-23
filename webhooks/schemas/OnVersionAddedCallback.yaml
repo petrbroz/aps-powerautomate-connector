@@ -1,0 +1,112 @@
+type: object
+properties:
+  version:
+    type: string
+  resourceUrn:
+    type: string
+  hook:
+    type: object
+    properties:
+      hookId:
+        type: string
+      tenant:
+        type: string
+      callbackUrl:
+        type: string
+      createdBy:
+        type: string
+      event:
+        type: string
+      createdDate:
+        type: string
+      lastUpdatedDate:
+        type: string
+      system:
+        type: string
+      creatorType:
+        type: string
+      status:
+        type: string
+      scope:
+        type: object
+        properties:
+          folder:
+            type: string
+      hookAttribute:
+        type: object
+      urn:
+        type: string
+  payload:
+    type: object
+    properties:
+      ext:
+        type: string
+      modifiedTime:
+        type: string
+      creator:
+        type: string
+      lineageUrn:
+        type: string
+      sizeInBytes:
+        type: integer
+      hidden:
+        type: boolean
+      indexable:
+        type: boolean
+      source:
+        type: string
+      version:
+        type: string
+      user_info:
+        type: object
+        properties:
+          id:
+            type: string
+      name:
+        type: string
+      context:
+        type: object
+        properties:
+          lineage:
+            type: object
+            properties:
+              reserved:
+                type: boolean
+              createUserId:
+                type: string
+              createTime:
+                type: string
+              createUserName:
+                type: string
+              lastModifiedUserId:
+                type: string
+              lastModifiedTime:
+                type: string
+              lastModifiedUserName:
+                type: string
+          operation:
+            type: string
+      createdTime:
+        type: string
+      modifiedBy:
+        type: string
+      state:
+        type: string
+      parentFolderUrn:
+        type: string
+      ancestors:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            urn:
+              type: string
+          required:
+          - name
+          - urn
+      project:
+        type: string
+      tenant:
+        type: string

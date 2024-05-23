@@ -1,0 +1,18 @@
+{
+  "name": "aps-powerautomate-connector",
+  "version": "0.0.0",
+  "description": "Experimental Microsoft Power Automate connector for Autodesk Platform Services.",
+  "author": "Petr Broz <petr.broz@autodesk.com>",
+  "license": "MIT",
+  "keywords": [
+    "autodesk-platform-services",
+    "power-automate"
+  ],
+  "scripts": {
+    "bundle": "swagger-cli bundle ./index.yaml --outfile build/aps-powerautomate-connector.yaml --type yaml",
+    "validate": "swagger-cli validate ./index.yaml"
+  },
+  "devDependencies": {
+    "swagger-cli": "^4.0.4"
+  }
+}
